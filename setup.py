@@ -23,7 +23,7 @@ setup(
         'lxml'
     ],
     entry_points={
-        'console_scripts': ['proxypool_run=run:cli']
+        'console_scripts': ['proxypool_run=run:main']
     },
     license='apache 2.0',
     zip_safe=False,
