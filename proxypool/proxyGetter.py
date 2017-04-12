@@ -57,7 +57,7 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
         for url in urls:
             soup = get_page(url) 
       
-            proxy_list = soup.find('div', {'id': 'index_free_list'}).find('tbody')
+            proxy_list = soup.find('tbody')
             for proxy in proxy_list.find_all('tr'):
                 ip = proxy.find_all('td')[0].get_text()
                 port = proxy.find_all('td')[1].get_text()
@@ -83,10 +83,13 @@ class FreeProxyGetter(object, metaclass=ProxyMetaclass):
         """
         抓取xici代理网的数据。
         """
-        start_url = 'http://api.xicidaili.com/free2016.txt'
+        start_url = 'http://www.xicidaili.com/nn/'
         soup = get_page(start_url)
-        proxy_list = soup.find('p') 
-        return proxy_list.get_text().split('\r\n')
+        proxy_list = soup.find('table')
+        for proxy in proxy_list.find_all('tr')[1:]:
+            ip = proxy.find_all('td')[1].get_text()
+            port = proxy.find_all ( 'td' )[2].get_text ( )
+            yield ':'.join ( [ip , port] )
     
     def crawl_proxy360(self):
         """
